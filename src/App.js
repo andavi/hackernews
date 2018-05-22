@@ -160,22 +160,38 @@ class App extends Component {
   }
 }
 
-const Search = ({ 
-  value, 
-  onChange,
-  onSubmit, 
-  children
-}) => 
-  <form onSubmit={onSubmit}>
-    <input
-      type="text"
-      value={value}
-      onChange={onChange}
-    />
-    <button type="submit">
-      { children }
-    </button>
-  </form>
+class Search extends Component { 
+  componentDidMount() {
+    if (this.input) {
+      // Ref a DOM Element
+      // this.input.focus();
+    }
+  }
+
+  render() {
+    const {
+      value, 
+      onChange,
+      onSubmit, 
+      children
+    } = this.props;
+  
+    return (
+      <form onSubmit={onSubmit}>
+        <input
+          type="text"
+          value={value}
+          onChange={onChange}
+          ref={(node) => { this.input = node; }}
+        />
+        <button type="submit">
+          { children }
+        </button>
+      </form>
+    );
+  }
+}
+  
 
 Search.propTypes = {
   value: PropTypes.string.isRequired,
@@ -184,7 +200,11 @@ Search.propTypes = {
   children: PropTypes.node.isRequired
 }
 
-const Table = ({ list, pattern, onDismiss }) => 
+const Table = ({ 
+  list, 
+  pattern, 
+  onDismiss 
+}) => 
   <div className="table">
     {list.map(item => 
       <div key={item.objectID} className="table-row">
@@ -225,7 +245,11 @@ Table.propTypes = {
   onDismiss: PropTypes.func.isRequired
 }
 
-const Button = ({ onClick, className, children }) => 
+const Button = ({ 
+  onClick, 
+  className, 
+  children 
+}) => 
   <button
     onClick={onClick}
     className={className}
