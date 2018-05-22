@@ -156,12 +156,11 @@ class App extends Component {
           />
         }
         <div className="interactions">
-          { isLoading
-            ? <Loading />
-            : <Button onClick={() => this.fetchSearchTopStories(searchKey, page + 1)}>
-              More
-            </Button>
-          }
+          <ButtonWithLoading
+            isLoading={isLoading}
+            onClick={() => this.fetchSearchTopStories(searchKey, page + 1)}>
+            More
+          </ButtonWithLoading>
         </div>
       </div>
     );
@@ -278,6 +277,13 @@ Button.propTypes = {
 
 const Loading = () =>
   <i className="fa fa-spinner fa-spin" style={{ fontSize:'24px' }}></i>
+
+const withLoading = (Component) => ({ isLoading, ...rest }) =>
+  isLoading
+    ? <Loading />
+    : <Component { ...rest } />
+
+const ButtonWithLoading = withLoading(Button);
 
 export default App;
 
